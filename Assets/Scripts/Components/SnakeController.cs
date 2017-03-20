@@ -8,5 +8,7 @@ namespace SnakeGame.Components
 {
     public class SnakeController: MonoBehaviour
     {
+        [SerializeField]
+        private Sprite sprite;
     }
 }

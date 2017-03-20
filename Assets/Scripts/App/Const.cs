@@ -1,6 +1,5 @@
-﻿using System;
-
-namespace SnakeGame
+﻿
+namespace SnakeGame.App
 {
     public class Const
     {

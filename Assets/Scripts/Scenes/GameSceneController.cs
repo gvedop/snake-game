@@ -6,11 +6,7 @@ using UnityEngine;
 
 namespace SnakeGame.Scenes
 {
-    public class MobileGameSceneController: GameSceneController
+    public class GameSceneController: MonoBehaviour
     {
-        private void Start()
-        {
-            Debug.Log("MobileScene Load");
-        }
     }
 }

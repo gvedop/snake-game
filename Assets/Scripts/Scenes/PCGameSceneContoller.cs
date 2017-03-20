@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace SnakeGame.Assets.Scripts.Scenes
+namespace SnakeGame.Scenes
 {
-    public class PCGameSceneContoller: MonoBehaviour
+    public class PCGameSceneContoller: GameSceneController
     {
         private void Start()
         {
