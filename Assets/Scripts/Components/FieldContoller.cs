@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace SnakeGame.Assets.Scripts.Components
+namespace SnakeGame.Components
 {
     public class FieldContoller : MonoBehaviour
     {
-        private GameObject[][] _cells;
+        private Cell[][] _cells;
 
+        [SerializeField]
+        private Cell cellPrefab;
         [SerializeField]
         private Sprite sprite;
         [SerializeField]
@@ -20,7 +20,7 @@ namespace SnakeGame.Assets.Scripts.Components
         private int xStartPostion = 9;
         [SerializeField]
         private int yStartPostion = 20;
-
+        
         private void Start()
         {
             GenerateField();
@@ -66,23 +66,19 @@ namespace SnakeGame.Assets.Scripts.Components
                 screenToWorldPoint[1].y + (screenToWorldPoint[0].y - screenToWorldPoint[1].y) / 2);
 
             var yh = center.y + (newCellHeight * yCount / 2 - (newCellHeight / 2));
-            _cells = new GameObject[yCount][];
+            _cells = new Cell[yCount][];
             for (int h = 0; h < yCount; h++)
             {
                 //var xw = -(newCellWidth * widthCount / 2 - (newCellWidth / 2));
                 var xw = center.x - (newCellWidth * xCount / 2 - (newCellWidth / 2));
-                _cells[h] = new GameObject[xCount];
+                _cells[h] = new Cell[xCount];
                 for (int w = 0; w < xCount; w++)
                 {
-                    var go = new GameObject(string.Format("Cell_{0}_{1}", w, h));
-                    var sr = go.AddComponent<SpriteRenderer>();
-                    sr.sprite = sprite;
-                    go.transform.parent = transform;
-                    go.transform.position = new Vector2(xw, yh);
-                    go.transform.rotation = Quaternion.identity;
-                    go.transform.localScale = new Vector3(cellScaleWidth, cellScaleHeight, 1);
-                    
-                    _cells[h][w] = go;
+                    var cell = Instantiate(cellPrefab, new Vector2(xw, yh), Quaternion.identity, transform);
+                    cell.name = string.Format("Cell_{0}_{1}", w, h);
+                    cell.transform.localScale = new Vector3(cellScaleWidth, cellScaleHeight, 1);
+                    cell.SetCellType(CellType.Normal, sprite);
+                    _cells[h][w] = cell;
                     xw += newCellWidth;
                 }
                 yh -= newCellHeight;

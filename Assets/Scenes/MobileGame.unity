@@ -368,6 +368,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af48aee505ee26a488483d24b9ae797b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellPrefab: {fileID: 114288103644128084, guid: 386c38fde08b4f34691d3df2bb504f9e,
+    type: 2}
   sprite: {fileID: 21300000, guid: 968bdce710dbf6b42b02b8dbd18b8c23, type: 3}
   panel: {fileID: 285365122}
   xCount: 17

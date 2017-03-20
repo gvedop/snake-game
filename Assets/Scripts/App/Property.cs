@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using UnityEngine;
 
-namespace SnakeGame.Assets.Scripts.App
+namespace SnakeGame.App
 {
     public class Property
     {
+        public const string MAX_SCORE_RESULT_PREF = "MaxScoreResultPref";
+
         private static volatile Property _instance;
         private static object _sync = new object();
 
@@ -26,9 +25,12 @@ namespace SnakeGame.Assets.Scripts.App
             }
         }
 
+        public int MaxScoreResult { get; set; }
+
         public void Save()
         {
-
+            PlayerPrefs.SetInt(MAX_SCORE_RESULT_PREF, MaxScoreResult);
+            PlayerPrefs.Save();
         }
 
         private Property()
@@ -38,7 +40,7 @@ namespace SnakeGame.Assets.Scripts.App
 
         private void Load()
         {
-
+            MaxScoreResult = PlayerPrefs.GetInt(MAX_SCORE_RESULT_PREF, 0);
         }
     }
 }
