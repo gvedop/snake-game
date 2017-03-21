@@ -8,9 +8,9 @@ namespace SnakeGame.Scenes
 {
     public class MobileGameSceneController: GameSceneController
     {
-        private void Start()
-        {
-            Debug.Log("MobileScene Load");
-        }
+        //private void Start()
+        //{
+        //    Debug.Log("MobileScene Load");
+        //}
     }
 }

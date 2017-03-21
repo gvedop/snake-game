@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using SnakeGame.Contracts;
+using System;
 
 namespace SnakeGame.Components
 {
-    public class FieldContoller : MonoBehaviour
+    public class FieldController : MonoBehaviour, IFieldController
     {
+        private IGameLogic _gameLogic;
         private Cell[][] _cells;
 
         [SerializeField]
@@ -20,11 +23,25 @@ namespace SnakeGame.Components
         private int xStartPostion = 9;
         [SerializeField]
         private int yStartPostion = 20;
-        
-        private void Start()
+
+        public void SubscribeToGameLogic(IGameLogic gameLogic)
+        {
+            if (gameLogic == null)
+                throw new ArgumentNullException("gameLogic");
+            _gameLogic = gameLogic;
+        }
+
+        public void UnsubscribeFromGameLogic()
+        {
+            _gameLogic = null;
+        }
+
+        public void Init()
         {
             GenerateField();
         }
+
+        
 
         private void GenerateField()
         {
