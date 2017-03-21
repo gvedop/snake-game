@@ -7,6 +7,7 @@ using SnakeGame.Contracts;
 
 namespace SnakeGame.Components
 {
+    [DisallowMultipleComponent]
     public class MouseController: MonoBehaviour, IMouseController
     {
         private IGameLogic _gameLogic;

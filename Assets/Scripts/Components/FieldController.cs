@@ -4,6 +4,7 @@ using System;
 
 namespace SnakeGame.Components
 {
+    [DisallowMultipleComponent]
     public class FieldController : MonoBehaviour, IFieldController
     {
         private IGameLogic _gameLogic;

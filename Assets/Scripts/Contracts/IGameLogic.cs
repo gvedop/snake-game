@@ -3,9 +3,13 @@ namespace SnakeGame.Contracts
 {
     public interface IGameLogic
     {
+        IMenuController MenuController { get; }
         IFieldController FieldController { get; }
         ISnakeController Snakecontroller { get; }
         IMouseController MouseController { get; }
+
+        void RegisterMenuController(IMenuController menuController);
+        void UnregisterMenuController();
 
         void RegisterFieldController(IFieldController fieldController);
         void UnregisterFieldController();

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using SnakeGame.App;
 using SnakeGame.Contracts;
+using SnakeGame.Menus;
 using SnakeGame.Components;
 
 namespace SnakeGame.Scenes
@@ -11,6 +12,7 @@ namespace SnakeGame.Scenes
 
         private void Awake()
         {
+            gameLogic.RegisterMenuController(FindObjectOfType<MenuController>());
             gameLogic.RegisterFieldController(GetComponent<FieldController>());
             gameLogic.RegisterSnakeController(GetComponent<SnakeController>());
             gameLogic.RegisterMouseController(GetComponent<MouseController>());

@@ -5,6 +5,7 @@ namespace SnakeGame.App
 {
     public class GameLogic: IGameLogic
     {
+        private IMenuController _menuController;
         private IFieldController _fieldController;
         private ISnakeController _snakeController;
         private IMouseController _mouseController;
@@ -12,6 +13,11 @@ namespace SnakeGame.App
         public GameLogic()
         {
 
+        }
+
+        public IMenuController MenuController
+        {
+            get { return _menuController; }
         }
 
         public IFieldController FieldController
@@ -27,6 +33,23 @@ namespace SnakeGame.App
         public IMouseController MouseController
         {
             get { return _mouseController; }
+        }
+
+        public void RegisterMenuController(IMenuController menuController)
+        {
+            if (menuController == null)
+                throw new ArgumentNullException("menuController");
+            _menuController = menuController;
+            _menuController.SubscribeToGameLogic(this);
+        }
+
+        public void UnregisterMenuController()
+        {
+            if (_menuController != null)
+            {
+                _menuController.UnsubscribeFromGameLogic();
+                _menuController = null;
+            }
         }
 
         public void RegisterFieldController(IFieldController fieldController)
