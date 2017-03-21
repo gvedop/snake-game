@@ -35,12 +35,12 @@ namespace SnakeGame.Menus
 
         public void SetMaxScoreInMainMenu(int score)
         {
-
+            _mainMenu.SetMaxScore(score);
         }
 
         public void SetCurrentScoreInMainMenu(int score)
         {
-
+            _mainMenu.SetCurrentScore(score);
         }
 
         public void ShowExitMenu()

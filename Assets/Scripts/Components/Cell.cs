@@ -3,6 +3,7 @@
 namespace SnakeGame.Components
 {
     [DisallowMultipleComponent]
+    [RequireComponent(typeof(SpriteRenderer))]
     public class Cell: MonoBehaviour
     {
         private SpriteRenderer _spriteRender;
