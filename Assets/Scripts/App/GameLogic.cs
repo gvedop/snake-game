@@ -9,6 +9,8 @@ namespace SnakeGame.App
         private IFieldController _fieldController;
         private ISnakeController _snakeController;
         private IMouseController _mouseController;
+        private bool _isPlay = false;
+        private int _currentScore = 0;
 
         public GameLogic()
         {
@@ -112,7 +114,40 @@ namespace SnakeGame.App
 
         public void Init()
         {
+            _isPlay = false;
+            _currentScore = 0;
             _fieldController.Init();
+        }
+
+        public void NewGame()
+        {
+            _currentScore = 0;
+            _menuController.HideMainMenu();
+            _menuController.HideExitMenu();
+            _menuController.ShowGameMenu();
+            _isPlay = true;
+        }
+
+        public void ResumeGame()
+        {
+            if (!_isPlay)
+            {
+                _menuController.HideMainMenu();
+                _menuController.HideExitMenu();
+                _menuController.ShowGameMenu();
+                _isPlay = true;
+            }
+        }
+
+        public void PauseGame()
+        {
+            if (_isPlay)
+            {
+                _isPlay = false;
+                _menuController.HideGameMenu();
+                _menuController.HideExitMenu();
+                _menuController.ShowMainMenu(Property.Instance.MaxScoreResult, _currentScore, true, true);
+            }
         }
     }
 }

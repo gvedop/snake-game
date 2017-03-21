@@ -23,5 +23,8 @@ namespace SnakeGame.Contracts
         void UnregisterAllControllers();
         
         void Init();
+        void NewGame();
+        void ResumeGame();
+        void PauseGame();
     }
 }

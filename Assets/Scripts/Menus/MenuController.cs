@@ -23,24 +23,14 @@ namespace SnakeGame.Menus
             _gameLogic = null;
         }
 
-        public void ShowMainMenu()
+        public void ShowMainMenu(int maxScore, int currentScore, bool isShowCurrentScore, bool isShowResume)
         {
-            _mainMenu.gameObject.SetActive(true);
+            _mainMenu.Show(maxScore, currentScore, isShowCurrentScore, isShowResume);
         }
 
         public void HideMainMenu()
         {
-            _mainMenu.gameObject.SetActive(false);
-        }
-
-        public void SetMaxScoreInMainMenu(int score)
-        {
-            _mainMenu.SetMaxScore(score);
-        }
-
-        public void SetCurrentScoreInMainMenu(int score)
-        {
-            _mainMenu.SetCurrentScore(score);
+            _mainMenu.Hide();
         }
 
         public void ShowExitMenu()

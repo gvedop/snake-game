@@ -3,10 +3,8 @@ namespace SnakeGame.Contracts
 {
     public interface IMenuController: IGameLogicSubscriber
     {
-        void ShowMainMenu();
+        void ShowMainMenu(int maxScore, int currentScore, bool isShowCurrentScore, bool isShowResume);
         void HideMainMenu();
-        void SetMaxScoreInMainMenu(int score);
-        void SetCurrentScoreInMainMenu(int score);
 
         void ShowExitMenu();
         void HideExitMenu();

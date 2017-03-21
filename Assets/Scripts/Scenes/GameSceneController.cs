@@ -10,6 +10,26 @@ namespace SnakeGame.Scenes
     {
         protected IGameLogic gameLogic = new GameLogic();
 
+        public void NewGame()
+        {
+            gameLogic.NewGame();
+        }
+
+        public void ResumeGame()
+        {
+            gameLogic.ResumeGame();
+        }
+
+        public void PauseGame()
+        {
+            gameLogic.PauseGame();
+        }
+
+        public void ExitGame()
+        {
+
+        }
+
         private void Awake()
         {
             gameLogic.RegisterMenuController(FindObjectOfType<MenuController>());
