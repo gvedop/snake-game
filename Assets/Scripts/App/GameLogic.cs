@@ -149,8 +149,10 @@ namespace SnakeGame.App
 
         public void NewGame()
         {
-            _mouseController.ToStart();
+            _fieldController.ToStart();
+            _snakeController.ToStart();
             _wallController.ToStart();
+            _mouseController.ToStart();
             _currentScore = 0;
             _menuController.HideMainMenu();
             _menuController.HideExitMenu();
@@ -171,14 +173,16 @@ namespace SnakeGame.App
 
         public void PauseGame()
         {
-            _mouseController.ToStart();
-            //if (_isPlay)
-            //{
-            //    _isPlay = false;
-            //    _menuController.HideGameMenu();
-            //    _menuController.HideExitMenu();
-            //    _menuController.ShowMainMenu(Property.Instance.MaxScoreResult, _currentScore, true, true);
-            //}
+            //_fieldController.ToStart();
+            //_wallController.ToStart();
+            //_mouseController.ToStart();
+            if (_isPlay)
+            {
+                _isPlay = false;
+                _menuController.HideGameMenu();
+                _menuController.HideExitMenu();
+                _menuController.ShowMainMenu(Property.Instance.MaxScoreResult, _currentScore, true, true);
+            }
         }
     }
 }

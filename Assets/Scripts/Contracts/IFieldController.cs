@@ -6,7 +6,10 @@ namespace SnakeGame.Contracts
     public interface IFieldController : IGameLogicSubscriber
     {
         void Init();
-        Coordinate GetCoordinateFreeCell();
+        void ToStart();
         void SetCell(Coordinate coordinate, CellType cellType, Sprite sprite);
+        Coordinate GetSnakeStartCoordinate();
+        Coordinate GetWallCoordinate();
+        Coordinate GetMouseCoordinate();
     }
 }

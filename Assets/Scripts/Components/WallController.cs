@@ -32,7 +32,7 @@ namespace SnakeGame.Components
                 return;
             for (int i = 0; i < count; i++)
             {
-                var coordinate = _gameLogic.FieldController.GetCoordinateFreeCell();
+                var coordinate = _gameLogic.FieldController.GetWallCoordinate();
                 _gameLogic.FieldController.SetCell(coordinate, CellType.Wall, sprite);
             }
         }

@@ -19,7 +19,7 @@ namespace SnakeGame.Components
         [SerializeField]
         private int yCount = 21;
         [SerializeField]
-        private int xStartPostion = 9;
+        private int xStartPostion = 8;
         [SerializeField]
         private int yStartPostion = 20;
 
@@ -43,24 +43,14 @@ namespace SnakeGame.Components
             GenerateField();
         }
 
-        public Coordinate GetCoordinateFreeCell()
+        public void ToStart()
         {
-            var x = 0;
-            var y = 0;
-            if (TryGetRandomCoordinateCell(out x, out y) || TryGetRandomCoordinateCell(out x, out y))
+            for (int y = 0; y < yCount; y++)
             {
-                return new Coordinate(x, y);
-            }
-            else 
-            {
-                var xx = 0;
-                var yy = 0;
-                if (TryGetNextPositionFreeCell(x, y, out xx, out yy))
-                    return new Coordinate(xx, yy);
-                else if (TryGetNextPositionFreeCell(0, 0, out xx, out yy))
-                    return new Coordinate(xx, yy);
-                else
-                    return new Coordinate(0, 0);
+                for (int x = 0; x < xCount; x++)
+                {
+                    _cells[y][x].SetCellType(CellType.Normal, sprite);
+                } 
             }
         }
 
@@ -68,6 +58,54 @@ namespace SnakeGame.Components
         {
             _cells[coordinate.Y][coordinate.X].SetCellType(cellType, sprite);
         }
+
+        public Coordinate GetSnakeStartCoordinate()
+        {
+            return new Coordinate(xStartPostion, yStartPostion);
+        }
+
+        public Coordinate GetWallCoordinate()
+        {
+            var x = 0;
+            var y = 0;
+            if (TryGetWallRandomCoordinateCell(out x, out y) || TryGetWallRandomCoordinateCell(out x, out y))
+            {
+                return new Coordinate(x, y);
+            }
+            else
+            {
+                var xx = 0;
+                var yy = 0;
+                if (TryGetWallNextPositionFreeCell(x, y, out xx, out yy))
+                    return new Coordinate(xx, yy);
+                else if (TryGetWallNextPositionFreeCell(0, 0, out xx, out yy))
+                    return new Coordinate(xx, yy);
+                else
+                    return new Coordinate(0, 0);
+            }
+        }
+
+        public Coordinate GetMouseCoordinate()
+        {
+            var x = 0;
+            var y = 0;
+            if (TryGetMouseRandomCoordinateCell(out x, out y) || TryGetMouseRandomCoordinateCell(out x, out y))
+            {
+                return new Coordinate(x, y);
+            }
+            else
+            {
+                var xx = 0;
+                var yy = 0;
+                if (TryGetMouseNextPositionFreeCell(x, y, out xx, out yy))
+                    return new Coordinate(xx, yy);
+                else if (TryGetMouseNextPositionFreeCell(0, 0, out xx, out yy))
+                    return new Coordinate(xx, yy);
+                else
+                    return new Coordinate(0, 0);
+            }
+        }
+        
 
         private void GenerateField()
         {
@@ -128,19 +166,38 @@ namespace SnakeGame.Components
             }
         }
 
-        private bool IsCellFree(int x, int y)
+        private bool IsWallCellFree(int x, int y)
         {
-            return _cells[y][x].CellType == CellType.Normal;
+            if (_cells[y][x].CellType != CellType.Normal)
+                return false;
+            var res = 0;
+            if (IsRightCellFree(x, y))
+                res++;
+            if (IsRightCellFree(x + 1, y))
+                res++;
+            if (IsLeftCellFree(x, y))
+                res++;
+            if (IsLeftCellFree(x - 1, y))
+                res++;
+            if (IsUpCellFree(x, y))
+                res++;
+            if (IsUpCellFree(x, y + 1))
+                res++;
+            if (IsDownCellFree(x, y))
+                res++;
+            if (IsDownCellFree(x, y - 1))
+                res++;
+            return res >= 6;
         }
 
-        private bool TryGetRandomCoordinateCell(out int x, out int y)
+        private bool TryGetWallRandomCoordinateCell(out int x, out int y)
         {
             x = UnityEngine.Random.Range(0, xCount);
             y = UnityEngine.Random.Range(0, yCount);
-            return IsCellFree(x, y);
+            return IsWallCellFree(x, y);
         }
 
-        private bool TryGetNextPositionFreeCell(int x, int y, out int resX, out int resY)
+        private bool TryGetWallNextPositionFreeCell(int x, int y, out int resX, out int resY)
         {
             resY = y;
             resX = x;
@@ -148,7 +205,7 @@ namespace SnakeGame.Components
             {
                 while (resX < xCount)
                 {
-                    if (IsCellFree(resX, resY))
+                    if (IsWallCellFree(resX, resY))
                         return true;
                     resX++;
                 }
@@ -156,6 +213,84 @@ namespace SnakeGame.Components
                 resY++;
             }
             return false;
+        }
+
+        private bool IsMouseCellFree(int x, int y)
+        {
+            if (_cells[y][x].CellType != CellType.Normal)
+                return false;
+            var res = 0;
+            if (IsRightCellFree(x, y))
+                res++;
+            if (IsRightCellFree(x + 1, y))
+                res++;
+            if (IsLeftCellFree(x, y))
+                res++;
+            if (IsLeftCellFree(x - 1, y))
+                res++;
+            if (IsUpCellFree(x, y))
+                res++;
+            if (IsUpCellFree(x, y + 1))
+                res++;
+            if (IsDownCellFree(x, y))
+                res++;
+            if (IsDownCellFree(x, y - 1))
+                res++;
+            return res >= 4;
+        }
+
+        private bool TryGetMouseRandomCoordinateCell(out int x, out int y)
+        {
+            x = UnityEngine.Random.Range(0, xCount);
+            y = UnityEngine.Random.Range(0, yCount);
+            return IsMouseCellFree(x, y);
+        }
+
+        private bool TryGetMouseNextPositionFreeCell(int x, int y, out int resX, out int resY)
+        {
+            resY = y;
+            resX = x;
+            while (resY < yCount)
+            {
+                while (resX < xCount)
+                {
+                    if (IsMouseCellFree(resX, resY))
+                        return true;
+                    resX++;
+                }
+                resX = 0;
+                resY++;
+            }
+            return false;
+        }
+
+        private bool IsRightCellFree(int x, int y)
+        {
+            x = x + 1;
+            return x < xCount && _cells[y][x].CellType == CellType.Normal;
+        }
+
+        private bool IsLeftCellFree(int x, int y)
+        {
+            x = x - 1;
+            return x >= 0 && _cells[y][x].CellType == CellType.Normal;
+        }
+
+        private bool IsUpCellFree(int x, int y)
+        {
+            y = y + 1;
+            return y < yCount && _cells[y][x].CellType == CellType.Normal;
+        }
+
+        private bool IsDownCellFree(int x, int y)
+        {
+            y = y - 1;
+            return y >= 0 && _cells[y][x].CellType == CellType.Normal;
+        }
+
+        private bool IsCellFree(int x, int y)
+        {
+            return _cells[y][x].CellType == CellType.Normal;
         }
     }
 }

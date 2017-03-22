@@ -33,7 +33,7 @@ namespace SnakeGame.Components
 
         public void ToStart()
         {
-            _currentCoordinate = _gameLogic.FieldController.GetCoordinateFreeCell();
+            _currentCoordinate = _gameLogic.FieldController.GetMouseCoordinate();
             _gameLogic.FieldController.SetCell(_currentCoordinate, CellType.Mouse, sprite);
         }
     }
