@@ -36,6 +36,7 @@ namespace SnakeGame.Scenes
             gameLogic.RegisterFieldController(GetComponent<FieldController>());
             gameLogic.RegisterSnakeController(GetComponent<SnakeController>());
             gameLogic.RegisterMouseController(GetComponent<MouseController>());
+            gameLogic.RegisterWallController(GetComponent<WallController>());
         }
 
         private void Start()

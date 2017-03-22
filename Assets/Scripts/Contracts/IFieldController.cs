@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using UnityEngine;
+using SnakeGame.Core;
 
 namespace SnakeGame.Contracts
 {
     public interface IFieldController : IGameLogicSubscriber
     {
         void Init();
+        Coordinate GetCoordinateFreeCell();
+        void SetCell(Coordinate coordinate, CellType cellType, Sprite sprite);
     }
 }

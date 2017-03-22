@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SnakeGame.Core;
 
 namespace SnakeGame.Contracts
 {
     public interface IMouseController : IGameLogicSubscriber
     {
+        Coordinate CurrentCoordinate { get; }
+        void ToStart();
     }
 }

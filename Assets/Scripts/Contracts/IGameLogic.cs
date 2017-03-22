@@ -7,6 +7,7 @@ namespace SnakeGame.Contracts
         IFieldController FieldController { get; }
         ISnakeController Snakecontroller { get; }
         IMouseController MouseController { get; }
+        IWallController WallController { get; }
 
         void RegisterMenuController(IMenuController menuController);
         void UnregisterMenuController();
@@ -19,6 +20,9 @@ namespace SnakeGame.Contracts
 
         void RegisterMouseController(IMouseController mouseController);
         void UnregisterMouseController();
+
+        void RegisterWallController(IWallController wallController);
+        void UnregisterWallController();
 
         void UnregisterAllControllers();
         

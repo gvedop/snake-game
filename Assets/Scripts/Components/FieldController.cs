@@ -1,15 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using SnakeGame.Core;
 using SnakeGame.Contracts;
-using System;
 
 namespace SnakeGame.Components
 {
     [DisallowMultipleComponent]
     public class FieldController : MonoBehaviour, IFieldController
     {
-        private IGameLogic _gameLogic;
-        private Cell[][] _cells;
-
         [SerializeField]
         private Cell cellPrefab;
         [SerializeField]
@@ -25,6 +23,9 @@ namespace SnakeGame.Components
         [SerializeField]
         private int yStartPostion = 20;
 
+        private IGameLogic _gameLogic;
+        private Cell[][] _cells;
+        
         public void SubscribeToGameLogic(IGameLogic gameLogic)
         {
             if (gameLogic == null)
@@ -42,7 +43,31 @@ namespace SnakeGame.Components
             GenerateField();
         }
 
-        
+        public Coordinate GetCoordinateFreeCell()
+        {
+            var x = 0;
+            var y = 0;
+            if (TryGetRandomCoordinateCell(out x, out y) || TryGetRandomCoordinateCell(out x, out y))
+            {
+                return new Coordinate(x, y);
+            }
+            else 
+            {
+                var xx = 0;
+                var yy = 0;
+                if (TryGetNextPositionFreeCell(x, y, out xx, out yy))
+                    return new Coordinate(xx, yy);
+                else if (TryGetNextPositionFreeCell(0, 0, out xx, out yy))
+                    return new Coordinate(xx, yy);
+                else
+                    return new Coordinate(0, 0);
+            }
+        }
+
+        public void SetCell(Coordinate coordinate, CellType cellType, Sprite sprite)
+        {
+            _cells[coordinate.Y][coordinate.X].SetCellType(cellType, sprite);
+        }
 
         private void GenerateField()
         {
@@ -101,6 +126,36 @@ namespace SnakeGame.Components
                 }
                 yh -= newCellHeight;
             }
+        }
+
+        private bool IsCellFree(int x, int y)
+        {
+            return _cells[y][x].CellType == CellType.Normal;
+        }
+
+        private bool TryGetRandomCoordinateCell(out int x, out int y)
+        {
+            x = UnityEngine.Random.Range(0, xCount);
+            y = UnityEngine.Random.Range(0, yCount);
+            return IsCellFree(x, y);
+        }
+
+        private bool TryGetNextPositionFreeCell(int x, int y, out int resX, out int resY)
+        {
+            resY = y;
+            resX = x;
+            while (resY < yCount)
+            {
+                while (resX < xCount)
+                {
+                    if (IsCellFree(resX, resY))
+                        return true;
+                    resX++;
+                }
+                resX = 0;
+                resY++;
+            }
+            return false;
         }
     }
 }

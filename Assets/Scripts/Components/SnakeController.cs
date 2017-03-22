@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using SnakeGame.Contracts;
 
@@ -10,11 +7,11 @@ namespace SnakeGame.Components
     [DisallowMultipleComponent]
     public class SnakeController: MonoBehaviour, ISnakeController
     {
-        private IGameLogic _gameLogic;
-
         [SerializeField]
         private Sprite sprite;
 
+        private IGameLogic _gameLogic;
+        
         public void SubscribeToGameLogic(IGameLogic gameLogic)
         {
             if (gameLogic == null)
@@ -25,6 +22,11 @@ namespace SnakeGame.Components
         public void UnsubscribeFromGameLogic()
         {
             _gameLogic = null;
+        }
+
+        public void ToStart()
+        {
+
         }
     }
 }

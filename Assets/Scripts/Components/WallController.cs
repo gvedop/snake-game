@@ -5,14 +5,14 @@ using SnakeGame.Contracts;
 
 namespace SnakeGame.Components
 {
-    [DisallowMultipleComponent]
-    public class MouseController: MonoBehaviour, IMouseController
+    public class WallController: MonoBehaviour, IWallController
     {
         [SerializeField]
         private Sprite sprite;
+        [SerializeField]
+        private int count = 0;
 
         private IGameLogic _gameLogic;
-        private Coordinate _currentCoordinate;
 
         public void SubscribeToGameLogic(IGameLogic gameLogic)
         {
@@ -26,15 +26,20 @@ namespace SnakeGame.Components
             _gameLogic = null;
         }
 
-        public Coordinate CurrentCoordinate
-        {
-            get { return _currentCoordinate; }
-        }
-
         public void ToStart()
         {
-            _currentCoordinate = _gameLogic.FieldController.GetCoordinateFreeCell();
-            _gameLogic.FieldController.SetCell(_currentCoordinate, CellType.Mouse, sprite);
+            if (count == 0)
+                return;
+            for (int i = 0; i < count; i++)
+            {
+                var coordinate = _gameLogic.FieldController.GetCoordinateFreeCell();
+                _gameLogic.FieldController.SetCell(coordinate, CellType.Wall, sprite);
+            }
+        }
+
+        public void SetCount(int count)
+        {
+            this.count = count;
         }
     }
 }

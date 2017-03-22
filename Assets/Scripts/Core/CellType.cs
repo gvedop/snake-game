@@ -1,5 +1,5 @@
 ﻿
-namespace SnakeGame.Components
+namespace SnakeGame.Core
 {
     public enum CellType
     {

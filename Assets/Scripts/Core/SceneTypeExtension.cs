@@ -1,6 +1,6 @@
 ﻿using SnakeGame.App;
 
-namespace SnakeGame.Scenes
+namespace SnakeGame.Core
 {
     public static class SceneTypeExtension
     {

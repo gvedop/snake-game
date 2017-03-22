@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using SnakeGame.Core;
 
 namespace SnakeGame.Components
 {

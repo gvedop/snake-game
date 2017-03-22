@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SnakeGame.Scenes
+namespace SnakeGame.Core
 {
     public enum SceneType
     {

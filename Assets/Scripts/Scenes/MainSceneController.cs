@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using SnakeGame.App;
+using SnakeGame.Core;
 
 namespace SnakeGame.Scenes
 {
