@@ -7,6 +7,8 @@ namespace SnakeGame.Contracts
     {
         void Init();
         void ToStart();
+        CellType GetCellType(Coordinate coordinate);
+        void SetCellToNormal(Coordinate coordinate);
         void SetCell(Coordinate coordinate, CellType cellType, Sprite sprite);
         Coordinate GetSnakeStartCoordinate();
         Coordinate GetWallCoordinate();

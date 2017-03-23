@@ -4,7 +4,7 @@ namespace SnakeGame.Contracts
 {
     public interface IMouseController : IGameLogicSubscriber
     {
-        Coordinate CurrentCoordinate { get; }
         void ToStart();
+        void NewMouse();
     }
 }

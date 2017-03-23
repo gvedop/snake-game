@@ -54,6 +54,21 @@ namespace SnakeGame.Components
             }
         }
 
+        public CellType GetCellType(Coordinate coordinate)
+        {
+            if (coordinate.X < 0 ||
+                coordinate.X >= xCount ||
+                coordinate.Y < 0 ||
+                coordinate.Y >= yCount)
+                return CellType.Border;
+            return _cells[coordinate.Y][coordinate.X].CellType;
+        }
+
+        public void SetCellToNormal(Coordinate coordinate)
+        {
+            _cells[coordinate.Y][coordinate.X].SetCellType(CellType.Normal, sprite);
+        }
+
         public void SetCell(Coordinate coordinate, CellType cellType, Sprite sprite)
         {
             _cells[coordinate.Y][coordinate.X].SetCellType(cellType, sprite);
@@ -175,9 +190,13 @@ namespace SnakeGame.Components
                 res++;
             if (IsRightCellFree(x + 1, y))
                 res++;
+            if (IsRightCellFree(x + 2, y))
+                res++;
             if (IsLeftCellFree(x, y))
                 res++;
             if (IsLeftCellFree(x - 1, y))
+                res++;
+            if (IsLeftCellFree(x - 2, y))
                 res++;
             if (IsUpCellFree(x, y))
                 res++;
@@ -222,21 +241,13 @@ namespace SnakeGame.Components
             var res = 0;
             if (IsRightCellFree(x, y))
                 res++;
-            if (IsRightCellFree(x + 1, y))
-                res++;
             if (IsLeftCellFree(x, y))
-                res++;
-            if (IsLeftCellFree(x - 1, y))
                 res++;
             if (IsUpCellFree(x, y))
                 res++;
-            if (IsUpCellFree(x, y + 1))
-                res++;
             if (IsDownCellFree(x, y))
                 res++;
-            if (IsDownCellFree(x, y - 1))
-                res++;
-            return res >= 4;
+            return res >= 2;
         }
 
         private bool TryGetMouseRandomCoordinateCell(out int x, out int y)

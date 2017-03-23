@@ -137,6 +137,11 @@ namespace SnakeGame.App
             UnregisterWallController();
         }
 
+        public bool IsPlay
+        {
+            get { return _isPlay; }
+        }
+
         public void Init()
         {
             _isPlay = false;
@@ -144,7 +149,7 @@ namespace SnakeGame.App
             _fieldController.Init();
             _menuController.HideGameMenu();
             _menuController.HideExitMenu();
-            _menuController.ShowMainMenu(Property.Instance.MaxScoreResult, 0, false, false);
+            _menuController.ShowMainMenu(Property.Instance.MaxScoreResult);
         }
 
         public void NewGame()
@@ -154,6 +159,7 @@ namespace SnakeGame.App
             _wallController.ToStart();
             _mouseController.ToStart();
             _currentScore = 0;
+            _menuController.SetCurrentScoreInGameMenu(_currentScore);
             _menuController.HideMainMenu();
             _menuController.HideExitMenu();
             _menuController.ShowGameMenu();
@@ -181,8 +187,38 @@ namespace SnakeGame.App
                 _isPlay = false;
                 _menuController.HideGameMenu();
                 _menuController.HideExitMenu();
-                _menuController.ShowMainMenu(Property.Instance.MaxScoreResult, _currentScore, true, true);
+                _menuController.ShowPauseMainMenu(Property.Instance.MaxScoreResult, _currentScore);
             }
+        }
+
+        public void Exit()
+        {
+            _isPlay = false;
+            Property.Instance.Save();
+        }
+
+        public void Loss()
+        {
+            _isPlay = false;
+            _menuController.HideGameMenu();
+            _menuController.HideExitMenu();
+            _menuController.ShowLossMainMenu(Property.Instance.MaxScoreResult, _currentScore);
+        }
+
+        public void IncScore()
+        {
+            _currentScore++;
+            Property.Instance.MaxScoreResult = _currentScore;
+            _menuController.SetCurrentScoreInGameMenu(_currentScore);
+            _mouseController.NewMouse();
+        }
+
+        public void Win()
+        {
+            _isPlay = false;
+            _menuController.HideGameMenu();
+            _menuController.HideExitMenu();
+            _menuController.ShowWinMainMenu(Property.Instance.MaxScoreResult, _currentScore);
         }
     }
 }

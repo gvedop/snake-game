@@ -9,6 +9,8 @@ namespace SnakeGame.App
         private static volatile Property _instance;
         private static object _sync = new object();
 
+        private int _maxScoreResult = 0;
+
         public static Property Instance
         {
             get
@@ -25,11 +27,22 @@ namespace SnakeGame.App
             }
         }
 
-        public int MaxScoreResult { get; set; }
+        public int MaxScoreResult
+        {
+            get
+            {
+                return _maxScoreResult;
+            }
+            set
+            {
+                if (value > _maxScoreResult)
+                    _maxScoreResult = value;
+            }
+        }
 
         public void Save()
         {
-            PlayerPrefs.SetInt(MAX_SCORE_RESULT_PREF, MaxScoreResult);
+            PlayerPrefs.SetInt(MAX_SCORE_RESULT_PREF, _maxScoreResult);
             PlayerPrefs.Save();
         }
 
@@ -40,7 +53,7 @@ namespace SnakeGame.App
 
         private void Load()
         {
-            MaxScoreResult = PlayerPrefs.GetInt(MAX_SCORE_RESULT_PREF, 0);
+            _maxScoreResult = PlayerPrefs.GetInt(MAX_SCORE_RESULT_PREF, 0);
         }
     }
 }

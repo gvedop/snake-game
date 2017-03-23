@@ -23,9 +23,24 @@ namespace SnakeGame.Menus
             _gameLogic = null;
         }
 
-        public void ShowMainMenu(int maxScore, int currentScore, bool isShowCurrentScore, bool isShowResume)
+        public void ShowMainMenu(int maxScore)
         {
-            _mainMenu.Show(maxScore, currentScore, isShowCurrentScore, isShowResume);
+            _mainMenu.Show(maxScore);
+        }
+
+        public void ShowPauseMainMenu(int maxScore, int currentScore)
+        {
+            _mainMenu.ShowPause(maxScore, currentScore);
+        }
+
+        public void ShowWinMainMenu(int maxScore, int currentScore)
+        {
+            _mainMenu.ShowWin(maxScore, currentScore);
+        }
+
+        public void ShowLossMainMenu(int maxScore, int currentScore)
+        {
+            _mainMenu.ShowLoss(maxScore, currentScore);
         }
 
         public void HideMainMenu()
@@ -55,7 +70,7 @@ namespace SnakeGame.Menus
 
         public void SetCurrentScoreInGameMenu(int score)
         {
-
+            _gameMenu.SetScore(score);
         }
 
         private void Awake()

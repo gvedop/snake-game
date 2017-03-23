@@ -26,15 +26,28 @@ namespace SnakeGame.Components
             _gameLogic = null;
         }
 
-        public Coordinate CurrentCoordinate
-        {
-            get { return _currentCoordinate; }
-        }
-
         public void ToStart()
         {
+            CreateMouse();
+        }
+
+        public void NewMouse()
+        {
+            CreateMouse();
+        }
+
+        private void CreateMouse()
+        {
             _currentCoordinate = _gameLogic.FieldController.GetMouseCoordinate();
-            _gameLogic.FieldController.SetCell(_currentCoordinate, CellType.Mouse, sprite);
+            switch (_gameLogic.FieldController.GetCellType(_currentCoordinate))
+            {
+                case CellType.Normal:
+                    _gameLogic.FieldController.SetCell(_currentCoordinate, CellType.Mouse, sprite);
+                    break;
+                default:
+                    _gameLogic.Win();
+                    break;
+            }
         }
     }
 }

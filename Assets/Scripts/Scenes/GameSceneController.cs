@@ -30,6 +30,26 @@ namespace SnakeGame.Scenes
 
         }
 
+        public void TurnUp()
+        {
+            gameLogic.Snakecontroller.TurnUp();
+        }
+
+        public void TurnRight()
+        {
+            gameLogic.Snakecontroller.TurnRight();
+        }
+
+        public void TurnDown()
+        {
+            gameLogic.Snakecontroller.TurnDown();
+        }
+
+        public void TurnLeft()
+        {
+            gameLogic.Snakecontroller.TurnLeft();
+        }
+
         private void Awake()
         {
             gameLogic.RegisterMenuController(FindObjectOfType<MenuController>());
@@ -44,9 +64,24 @@ namespace SnakeGame.Scenes
             gameLogic.Init();
         }
 
+        private void Update()
+        {
+            if (!gameLogic.IsPlay)
+                return;
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+                TurnUp();
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+                TurnRight();
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+                TurnDown();
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+                TurnLeft();
+        }
+
         private void OnDestroy()
         {
             gameLogic.UnregisterAllControllers();
+            gameLogic.Exit();
         }
     }
 }

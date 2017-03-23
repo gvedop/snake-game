@@ -26,9 +26,15 @@ namespace SnakeGame.Contracts
 
         void UnregisterAllControllers();
         
+        bool IsPlay { get; }
         void Init();
         void NewGame();
         void ResumeGame();
         void PauseGame();
+        void Exit();
+
+        void Win();
+        void Loss();
+        void IncScore();
     }
 }
