@@ -64,6 +64,16 @@ namespace SnakeGame.Components
             return _cells[coordinate.Y][coordinate.X].CellType;
         }
 
+        public CellType GetCellType(int x, int y)
+        {
+            if (x < 0 ||
+                x >= xCount ||
+                y < 0 ||
+                y >= yCount)
+                return CellType.Border;
+            return _cells[y][x].CellType;
+        }
+
         public void SetCellToNormal(Coordinate coordinate)
         {
             _cells[coordinate.Y][coordinate.X].SetCellType(CellType.Normal, sprite);
@@ -184,6 +194,8 @@ namespace SnakeGame.Components
         private bool IsWallCellFree(int x, int y)
         {
             if (_cells[y][x].CellType != CellType.Normal)
+                return false;
+            if (GetCellType(x, y + 1) == CellType.Snake)
                 return false;
             var res = 0;
             if (IsRightCellFree(x, y))

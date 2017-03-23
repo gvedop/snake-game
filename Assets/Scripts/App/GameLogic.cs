@@ -1,5 +1,6 @@
 ﻿using System;
 using SnakeGame.Contracts;
+using UnityEngine;
 
 namespace SnakeGame.App
 {
@@ -193,8 +194,21 @@ namespace SnakeGame.App
 
         public void Exit()
         {
-            _isPlay = false;
-            Property.Instance.Save();
+            Debug.Log("try exit");
+            if (_isPlay)
+            {
+                Debug.Log("question exit");
+                _isPlay = false;
+                _menuController.HideGameMenu();
+                _menuController.ShowExitMenu();
+                _menuController.HideGameMenu();
+            }
+            else
+            {
+                Debug.Log("exit");
+                Property.Instance.Save();
+                Application.Quit();
+            }
         }
 
         public void Loss()

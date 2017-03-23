@@ -27,7 +27,7 @@ namespace SnakeGame.Scenes
 
         public void ExitGame()
         {
-
+            gameLogic.Exit();
         }
 
         public void TurnUp()
@@ -66,6 +66,8 @@ namespace SnakeGame.Scenes
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                ExitGame();
             if (!gameLogic.IsPlay)
                 return;
             if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -81,7 +83,6 @@ namespace SnakeGame.Scenes
         private void OnDestroy()
         {
             gameLogic.UnregisterAllControllers();
-            gameLogic.Exit();
         }
     }
 }

@@ -12,7 +12,9 @@ namespace SnakeGame.Components
         [SerializeField]
         private Sprite sprite;
         [SerializeField]
-        private float speed = 0.4f;
+        private float speed = 0.35f;
+        [SerializeField]
+        private float decSpeed = 0f;
         
         private IGameLogic _gameLogic;
         private SnakeDirection _direction = SnakeDirection.Up;
@@ -115,7 +117,7 @@ namespace SnakeGame.Components
 
         private void IncSpeed()
         {
-            _currentSpeed -= 0.01f;
+            _currentSpeed -= decSpeed;
         }
 
         private void AddHead(Coordinate coordinate)
