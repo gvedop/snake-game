@@ -6,9 +6,27 @@ using SnakeGame.Components;
 
 namespace SnakeGame.Scenes
 {
-    public class GameSceneController: MonoBehaviour
+    public class GameSceneController: MonoBehaviour, ISceneController
     {
-        protected IGameLogic gameLogic = new GameLogic();
+        [SerializeField]
+        private AudioClip winClip;
+        [SerializeField]
+        private AudioClip lossClip;
+
+        protected IGameLogic gameLogic;
+        private AudioSource _audioSource;
+
+        public void PlayWin()
+        {
+            if (_audioSource != null && winClip != null)
+                _audioSource.PlayOneShot(winClip);
+        }
+
+        public void PlayLoss()
+        {
+            if (_audioSource != null && lossClip != null)
+                _audioSource.PlayOneShot(lossClip);
+        }
 
         public void NewGame()
         {
@@ -52,6 +70,8 @@ namespace SnakeGame.Scenes
 
         private void Awake()
         {
+            _audioSource = GetComponent<AudioSource>();
+            gameLogic = new GameLogic(this);
             gameLogic.RegisterMenuController(FindObjectOfType<MenuController>());
             gameLogic.RegisterFieldController(GetComponent<FieldController>());
             gameLogic.RegisterSnakeController(GetComponent<SnakeController>());

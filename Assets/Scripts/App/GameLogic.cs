@@ -6,6 +6,7 @@ namespace SnakeGame.App
 {
     public class GameLogic: IGameLogic
     {
+        private ISceneController _sceneController;
         private IMenuController _menuController;
         private IFieldController _fieldController;
         private ISnakeController _snakeController;
@@ -14,9 +15,11 @@ namespace SnakeGame.App
         private bool _isPlay = false;
         private int _currentScore = 0;
 
-        public GameLogic()
+        public GameLogic(ISceneController sceneController)
         {
-
+            if (sceneController == null)
+                throw new ArgumentNullException("scenecontroller");
+            _sceneController = sceneController;
         }
 
         public IMenuController MenuController
@@ -214,6 +217,7 @@ namespace SnakeGame.App
         public void Loss()
         {
             _isPlay = false;
+            _sceneController.PlayLoss();
             _menuController.HideGameMenu();
             _menuController.HideExitMenu();
             _menuController.ShowLossMainMenu(Property.Instance.MaxScoreResult, _currentScore);
@@ -224,12 +228,13 @@ namespace SnakeGame.App
             _currentScore++;
             Property.Instance.MaxScoreResult = _currentScore;
             _menuController.SetCurrentScoreInGameMenu(_currentScore);
-            _mouseController.NewMouse();
+            _mouseController.EatMouse();
         }
 
         public void Win()
         {
             _isPlay = false;
+            _sceneController.PlayWin();
             _menuController.HideGameMenu();
             _menuController.HideExitMenu();
             _menuController.ShowWinMainMenu(Property.Instance.MaxScoreResult, _currentScore);

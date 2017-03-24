@@ -10,9 +10,12 @@ namespace SnakeGame.Components
     {
         [SerializeField]
         private Sprite sprite;
+        [SerializeField]
+        private AudioClip soundDead;
 
         private IGameLogic _gameLogic;
         private Coordinate _currentCoordinate;
+        private AudioSource _audioSource;
 
         public void SubscribeToGameLogic(IGameLogic gameLogic)
         {
@@ -31,9 +34,16 @@ namespace SnakeGame.Components
             CreateMouse();
         }
 
-        public void NewMouse()
+        public void EatMouse()
         {
+            if (_audioSource != null && soundDead != null)
+                _audioSource.PlayOneShot(soundDead);
             CreateMouse();
+        }
+
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
         }
 
         private void CreateMouse()

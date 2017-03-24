@@ -5,6 +5,6 @@ namespace SnakeGame.Contracts
     public interface IMouseController : IGameLogicSubscriber
     {
         void ToStart();
-        void NewMouse();
+        void EatMouse();
     }
 }

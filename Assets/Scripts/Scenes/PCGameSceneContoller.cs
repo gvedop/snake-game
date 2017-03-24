@@ -8,9 +8,5 @@ namespace SnakeGame.Scenes
 {
     public class PCGameSceneContoller: GameSceneController
     {
-        private void Start()
-        {
-            Debug.Log("PCScene Load");
-        }
     }
 }

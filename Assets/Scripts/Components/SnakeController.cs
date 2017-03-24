@@ -15,12 +15,16 @@ namespace SnakeGame.Components
         private float speed = 0.35f;
         [SerializeField]
         private float decSpeed = 0f;
+        [SerializeField]
+        private AudioClip moveClip;
         
         private IGameLogic _gameLogic;
         private SnakeDirection _direction = SnakeDirection.Up;
         private LinkedList<Coordinate> _body = new LinkedList<Coordinate>();
         private float _currentTime = 0f;
         private float _currentSpeed = 0f;
+        private AudioSource _audioSource;
+        private int _sountCounter = 0;
 
         public void SubscribeToGameLogic(IGameLogic gameLogic)
         {
@@ -40,6 +44,7 @@ namespace SnakeGame.Components
             _currentSpeed = speed;
             _direction = SnakeDirection.Up;
             _body.Clear();
+            _sountCounter = 0;
             AddHead(_gameLogic.FieldController.GetSnakeStartCoordinate());
         }
 
@@ -61,6 +66,11 @@ namespace SnakeGame.Components
         public void TurnUp()
         {
             _direction = SnakeDirection.Up;
+        }
+
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
         }
 
         private void Update()
@@ -91,6 +101,7 @@ namespace SnakeGame.Components
                     IncSpeed();
                     break;
                 case CellType.Normal:
+                    PlayMove();
                     RemoveTail();
                     AddHead(nextCoordinate);
                     break;
@@ -131,6 +142,19 @@ namespace SnakeGame.Components
             var tail = _body.Last.Value;
             _gameLogic.FieldController.SetCellToNormal(tail);
             _body.RemoveLast();
+        }
+
+        private void PlayMove()
+        {
+            if (_audioSource != null && moveClip != null)
+            {
+                _sountCounter++;
+                if (_sountCounter > 0)
+                {
+                    _sountCounter = 0;
+                    _audioSource.PlayOneShot(moveClip, 0.1f);
+                }
+            }
         }
     }
 }
